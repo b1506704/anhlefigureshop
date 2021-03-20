@@ -30,8 +30,8 @@ function template_header($title) {
                         <div class="content-wrapper">
                             <h1>Anh Lê's Figure Shop</h1>
                             <nav>
-                                <a href="index.php">Home</a>
-                                <a href="index.php?page=products">Products</a>
+                                <a href="index.php">Trang chủ</a>
+                                <a href="index.php?page=products">Figures</a>
                             </nav>
                             <div class="link-icons">
                                 <a href="index.php?page=cart">

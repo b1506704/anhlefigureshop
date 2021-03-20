@@ -1,8 +1,8 @@
-<?=template_header('Place Order')?>
+<?=template_header('Thanh toán')?>
 
 <div class="placeorder content-wrapper">
-    <h1>Your Order Has Been Placed</h1>
-    <p>Thank you for ordering with us, we'll contact you by email with your order details.</p>
+    <h1>Đã thanh toán thành công</h1>
+    <p>Cảm ơn quý khách đã mua hàng tại Anh Lê's Shop Figure</p>
 </div>
 
 <?=template_footer()?>

@@ -16,7 +16,7 @@ if (isset($_GET['id'])) {
     exit('Product does not exist!');
 }
 ?>
-<?=template_header('Product')?>
+<?=template_header('Chi tiết sản phẩm')?>
 
 <div class="product content-wrapper">
     <img src="./assets/imgs/<?=$product['img']?>" width="500" height="500" alt="<?=$product['name']?>">
@@ -29,9 +29,9 @@ if (isset($_GET['id'])) {
             <?php endif; ?>
         </span>
         <form action="index.php?page=cart" method="post">
-            <input type="number" name="quantity" value="1" min="1" max="<?=$product['quantity']?>" placeholder="Quantity" required>
+            <input type="number" name="quantity" value="1" min="1" max="<?=$product['quantity']?>" placeholder="Số lượng" required>
             <input type="hidden" name="product_id" value="<?=$product['id']?>">
-            <input type="submit" value="Add To Cart">
+            <input type="submit" value="Thêm vào giỏ">
         </form>
         <div class="description">
             <?=$product['desc']?>

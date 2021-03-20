@@ -77,24 +77,24 @@ if ($products_in_cart) {
     }
 }
 ?>
-<?=template_header('Cart')?>
+<?=template_header('Giỏ hàng')?>
 
 <div class="cart content-wrapper">
-    <h1>Shopping Cart</h1>
+    <h1>Giỏ hàng</h1>
     <form action="index.php?page=cart" method="post">
         <table>
             <thead>
                 <tr>
-                    <td colspan="2">Product</td>
-                    <td>Price</td>
-                    <td>Quantity</td>
-                    <td>Total</td>
+                    <td colspan="2">Sản phẩm</td>
+                    <td>Giá</td>
+                    <td>Số lượng</td>
+                    <td>Thành tiền</td>
                 </tr>
             </thead>
             <tbody>
                 <?php if (empty($products)): ?>
                 <tr>
-                    <td colspan="5" style="text-align:center;">You have no products added in your Shopping Cart</td>
+                    <td colspan="5" style="text-align:center;">Giỏ hàng trống.</td>
                 </tr>
                 <?php else: ?>
                 <?php foreach ($products as $product): ?>
@@ -120,12 +120,12 @@ if ($products_in_cart) {
             </tbody>
         </table>
         <div class="subtotal">
-            <span class="text">Subtotal</span>
+            <span class="text">Tổng số tiền</span>
             <span class="price">&dollar;<?=$subtotal?></span>
         </div>
         <div class="buttons">
-            <input type="submit" value="Update" name="update">
-            <input type="submit" value="Place Order" name="placeorder">
+            <input type="submit" value="Cập Nhật" name="update">
+            <input type="submit" value="Thanh Toán" name="placeorder">
         </div>
     </form>
 </div>

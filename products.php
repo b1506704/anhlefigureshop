@@ -14,11 +14,11 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // Get the total number of products
 $total_products = $pdo->query('SELECT * FROM products')->rowCount();
 ?>
-<?=template_header('Products')?>
+<?=template_header('Figures')?>
 
 <div class="products content-wrapper">
-    <h1>Products</h1>
-    <p><?=$total_products?> Products</p>
+    <h1>Kho hàng</h1>
+    <p><?=$total_products?> Sản phẩm</p>
     <div class="products-wrapper">
         <?php foreach ($products as $product): ?>
         <a href="index.php?page=product&id=<?=$product['id']?>" class="product">
