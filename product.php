@@ -1,9 +1,9 @@
 <?php
 // Check to make sure the id parameter is specified in the URL
-if (isset($_GET['id'])) {
+if (isset($_GET['MSHH'])) {
     // Prepare statement and execute, prevents SQL injection
-    $stmt = $pdo->prepare('SELECT * FROM products WHERE id = ?');
-    $stmt->execute([$_GET['id']]);
+    $stmt = $pdo->prepare('SELECT * FROM hanghoa WHERE MSHH = ?');
+    $stmt->execute([$_GET['MSHH']]);
     // Fetch the product from the database and return the result as an Array
     $product = $stmt->fetch(PDO::FETCH_ASSOC);
     // Check if the product exists (array is not empty)
@@ -19,22 +19,22 @@ if (isset($_GET['id'])) {
 <?=template_header('Chi tiết sản phẩm')?>
 
 <div class="product content-wrapper">
-    <img src="./assets/imgs/<?=$product['img']?>" width="500" height="500" alt="<?=$product['name']?>">
+    <img src="./assets/imgs/<?=$product['QuyCach']?>" width="500" height="500" alt="<?=$product['TenHH']?>">
     <div>
-        <h1 class="name"><?=$product['name']?></h1>
+        <h1 class="name"><?=$product['TenHH']?></h1>
         <span class="price">
-            &dollar;<?=$product['price']?>
-            <?php if ($product['rrp'] > 0): ?>
-            <span class="rrp">&dollar;<?=$product['rrp']?></span>
+            &dollar;<?=$product['Gia']?>
+            <?php if ($product['Gia'] > 0): ?>
+            <span class="rrp">&dollar;<?=$product['Gia']?></span>
             <?php endif; ?>
         </span>
         <form action="index.php?page=cart" method="post">
-            <input type="number" name="quantity" value="1" min="1" max="<?=$product['quantity']?>" placeholder="Số lượng" required>
-            <input type="hidden" name="product_id" value="<?=$product['id']?>">
+            <input type="number" name="quantity" value="1" min="1" max="<?=$product['SoLuongHang']?>" placeholder="Số lượng" required>
+            <input type="hidden" name="product_id" value="<?=$product['MSHH']?>">
             <input type="submit" value="Thêm vào giỏ">
         </form>
         <div class="description">
-            <?=$product['desc']?>
+            <?=$product['GhiChu']?>
         </div>
     </div>
 </div>
