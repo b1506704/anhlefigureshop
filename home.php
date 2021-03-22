@@ -1,14 +1,14 @@
 <?php
 // Get the 4 most recently added products
-$stmt = $pdo->prepare('SELECT * FROM hanghoa ORDER BY MSHH DESC LIMIT 3');
+$stmt = $pdo->prepare('SELECT * FROM hanghoa ORDER BY MSHH DESC LIMIT 4');
 $stmt->execute();
 $recently_added_products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <?=template_header('Trang chủ')?>
 
 <div class="featured">
-    <h2>Anh Lê's Shop Figure</h2>
-    <p>Nơi phân phối figure chất lượng, nhập khẩu 100% từ Nhật Bản </p>
+    <h2>Anh Le's Figure Shop</h2>
+    <p>Nơi phân phối mô hình 3d chất lượng, nhập khẩu 100% từ Nhật Bản </p>
 </div>
 <div class="recentlyadded content-wrapper">
     <h2>Sản phẩm mới nhập kho</h2>

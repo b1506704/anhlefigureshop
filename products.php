@@ -18,7 +18,7 @@ $total_products = $pdo->query('SELECT * FROM hanghoa')->rowCount();
 
 <div class="products content-wrapper">
     <h1>Kho hàng</h1>
-    <p><?=$total_products?> Sản phẩm</p>
+    <p style="font-family:monospace; font-size:14px">Hiện tại có <?=$total_products?> sản phẩm</p>
     <div class="products-wrapper">
         <?php foreach ($products as $product): ?>
         <a href="index.php?page=product&MSHH=<?=$product['MSHH']?>" class="product">

@@ -29,7 +29,7 @@ if (isset($_GET['MSHH'])) {
             <?php endif; ?>
         </span>
         <form action="index.php?page=cart" method="post">
-            <input type="number" name="quantity" value="1" min="1" max="<?=$product['SoLuongHang']?>" placeholder="Số lượng" required>
+            <input type="number" name="quantity" value="1" min="1" max="<?=$product['SoLuongHang']?>" placeholder="0" required>
             <input type="hidden" name="product_id" value="<?=$product['MSHH']?>">
             <input type="submit" value="Thêm vào giỏ">
         </form>

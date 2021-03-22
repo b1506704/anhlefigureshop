@@ -94,7 +94,7 @@ if ($products_in_cart) {
             <tbody>
                 <?php if (empty($products)): ?>
                 <tr>
-                    <td colspan="5" style="text-align:center;">Giỏ hàng trống.</td>
+                    <td colspan="5" style="text-align:center; font-family:monospace">Giỏ hàng trống</td>
                 </tr>
                 <?php else: ?>
                 <?php foreach ($products as $product): ?>
@@ -107,11 +107,11 @@ if ($products_in_cart) {
                     <td>
                         <a href="index.php?page=product&MSHH=<?=$product['MSHH']?>"><?=$product['TenHH']?></a>
                         <br>
-                        <a href="index.php?page=cart&remove=<?=$product['MSHH']?>" class="remove">Remove</a>
+                        <a href="index.php?page=cart&remove=<?=$product['MSHH']?>" class="remove">Xóa</a>
                     </td>
                     <td class="price">&dollar;<?=$product['Gia']?></td>
                     <td class="quantity">
-                        <input type="number" name="quantity-<?=$product['MSHH']?>" value="<?=$products_in_cart[$product['MSHH']]?>" min="1" max="<?=$product['SoLuongHang']?>" placeholder="Quantity" required>
+                        <input type="number" name="quantity-<?=$product['MSHH']?>" value="<?=$products_in_cart[$product['MSHH']]?>" min="1" max="<?=$product['SoLuongHang']?>" placeholder="0" required>
                     </td>
                     <td class="price">&dollar;<?=$product['Gia'] * $products_in_cart[$product['MSHH']]?></td>
                 </tr>

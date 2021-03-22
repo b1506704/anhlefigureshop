@@ -28,9 +28,9 @@ function template_header($title) {
                 <body>
                     <header>
                         <div class="content-wrapper">
-                            <h1>Anh Lê's Figure Shop</h1>
+                            <h1>Anh Le's Figure Shop</h1>
                             <nav>
-                                <a href="index.php">Trang chủ</a>
+                                <a href="index.php">Home</a>
                                 <a href="index.php?page=products">Figures</a>
                             </nav>
                             <div class="link-icons">
@@ -41,7 +41,7 @@ function template_header($title) {
                             </div>
                         </div>
                     </header>
-                <main>
+                    <main>
             EOT;
 }
 // Template footer
@@ -54,7 +54,6 @@ function template_footer() {
                             <p>&copy; $year, Anh Lê Figure Shop</p>
                         </div>
                     </footer>
-                    <script src="script.js"></script>
                 </body>
             </html>
             EOT;
