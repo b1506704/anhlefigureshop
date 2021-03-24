@@ -22,13 +22,10 @@ $total_products = $pdo->query('SELECT * FROM hanghoa')->rowCount();
     <div class="products-wrapper">
         <?php foreach ($products as $product): ?>
         <a href="index.php?page=product&MSHH=<?=$product['MSHH']?>" class="product">
-            <img src="./assets/imgs/<?=$product['QuyCach']?>" width="200" height="200" alt="<?=$product['TenHH']?>">
+            <img src="./assets/imgs/<?=$product['HinhAnh']?>" width="200" height="200" alt="<?=$product['TenHH']?>">
             <span class="name"><?=$product['TenHH']?></span>
             <span class="price">
                 &dollar;<?=$product['Gia']?>
-                <?php if ($product['Gia'] > 0): ?>
-                <span class="rrp">&dollar;<?=$product['Gia']?></span>
-                <?php endif; ?>
             </span>
         </a>
         <?php endforeach; ?>

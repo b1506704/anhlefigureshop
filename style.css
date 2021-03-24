@@ -23,10 +23,23 @@
 }
 * {
 	box-sizing: border-box;
-	/* font-family: Title; */
-	/* font-size: 20px; */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+body::-webkit-scrollbar {
+	width: 8px;
+}
+   
+body::-webkit-scrollbar-track {
+	box-shadow: inset 0px 22px 70px 4px rgba(0,0,0,0.3);
+}
+
+body::-webkit-scrollbar-thumb {
+	background-color: rgba(90, 112, 116, 0.863);
+	border-radius: 15px;
+}
+body::-webkit-scrollbar-thumb:hover {
+	background-color: rgb(25, 49, 53);
 }
 
 html {
@@ -57,10 +70,13 @@ header {
 	position: sticky;
 	top: 0;
 	width: 100%;
-	border-style: dotted; 
+	border-left-style: none;
+	border-right-style: none;
+	border-top-style: none;
+	border-bottom-style: dotted; 
     border-color: rgb(202, 194, 202);
 	user-select: none;
-	backdrop-filter: blur(5px);
+	backdrop-filter: blur(4px);
 	background-color: rgba(73, 73, 50, 0.534);
 	box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 	transition: all 0.5s ease-in-out;
@@ -213,6 +229,7 @@ main .recentlyadded .products .product, main .products .products-wrapper .produc
 	font-family: Outerspace;
 	text-decoration: none;
 	height: 100%;
+	box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 }
 
 main .recentlyadded .products .product img, main .products .products-wrapper .product img {
@@ -222,18 +239,21 @@ main .recentlyadded .products .product img, main .products .products-wrapper .pr
 main .recentlyadded .products .product .name, main .products .products-wrapper .product .name {
 	display: block;
 	color: #555555;
-	padding: 20px 0 2px 0;
+	text-align: center;
+	padding-top: 20px;
 }
 main .recentlyadded .products .product .price, main .products .products-wrapper .product .price {
 	display: block;
+	text-align: center;
 	color: #999999;
+	padding-bottom: 20px;
 }
 main .recentlyadded .products .product .rrp, main .products .products-wrapper .product .rrp {
 	color: #BBBBBB;
 	text-decoration: line-through;
 }
 main .recentlyadded .products .product:hover img, main .products .products-wrapper .product:hover img {
-	transform: scale(1.15);
+	transform: scale(1.05);
 	transition: transform 0.5s ease-in-out;
 }
 main .recentlyadded .products .product:hover .name, main .products .products-wrapper .product:hover .name {
@@ -327,7 +347,8 @@ main > .products h1 {
 }
 main > .products .buttons {
 	text-align: right;
-	padding-bottom: 40px;
+	padding-bottom: 0px;
+	padding-top: 15px;
 }
 main > .products .buttons a {
 	display: inline-block;

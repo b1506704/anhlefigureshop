@@ -19,14 +19,11 @@ if (isset($_GET['MSHH'])) {
 <?=template_header('Chi tiết sản phẩm')?>
 
 <div class="product content-wrapper">
-    <img src="./assets/imgs/<?=$product['QuyCach']?>" width="500" height="500" alt="<?=$product['TenHH']?>">
+    <img src="./assets/imgs/<?=$product['HinhAnh']?>" width="500" height="500" alt="<?=$product['TenHH']?>">
     <div>
         <h1 class="name"><?=$product['TenHH']?></h1>
         <span class="price">
             &dollar;<?=$product['Gia']?>
-            <?php if ($product['Gia'] > 0): ?>
-            <span class="rrp">&dollar;<?=$product['Gia']?></span>
-            <?php endif; ?>
         </span>
         <form action="index.php?page=cart" method="post">
             <input type="number" name="quantity" value="1" min="1" max="<?=$product['SoLuongHang']?>" placeholder="0" required>
@@ -34,6 +31,11 @@ if (isset($_GET['MSHH'])) {
             <input type="submit" value="Thêm vào giỏ">
         </form>
         <div class="description">
+            <div> <b> Chi tiết sản phẩm:</b> </div>
+            <br>
+            <div>
+                Tỷ lệ: <?=$product['MaLoaiHang']?> 
+            </div>
             <?=$product['GhiChu']?>
         </div>
     </div>

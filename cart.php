@@ -4,7 +4,7 @@ if (isset($_POST['product_id'], $_POST['quantity']) && is_numeric($_POST['produc
     // Set the post variables so we easily identify them, also make sure they are integer
     $product_id = (int)$_POST['product_id'];
     $quantity = (int)$_POST['quantity'];
-    // Prepare the SQL statement, we basically are checking if the product exists in our databaser
+    // Prepare the SQL statement, we basically are checking if the product exists in our database
     $stmt = $pdo->prepare('SELECT * FROM hanghoa WHERE MSHH = ?');
     $stmt->execute([$_POST['product_id']]);
     // Fetch the product from the database and return the result as an Array
@@ -101,7 +101,7 @@ if ($products_in_cart) {
                 <tr>
                     <td class="img">
                         <a href="index.php?page=product&MSHH=<?=$product['MSHH']?>">
-                            <img src="./assets/imgs/<?=$product['QuyCach']?>" width="50" height="50" alt="<?=$product['TenHH']?>">
+                            <img src="./assets/imgs/<?=$product['HinhAnh']?>" width="50" height="50" alt="<?=$product['TenHH']?>">
                         </a>
                     </td>
                     <td>
@@ -125,7 +125,7 @@ if ($products_in_cart) {
         </div>
         <div class="buttons">
             <input type="submit" value="Cập Nhật" name="update">
-            <input type="submit" value="Thanh Toán" name="placeorder">
+            <input type="submit" value="Đặt hàng" name="placeorder">
         </div>
     </form>
 </div>
