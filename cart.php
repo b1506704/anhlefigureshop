@@ -1,14 +1,15 @@
 <?php
+
 // If the user clicked the add to cart button on the product page we can check for the form data
 if (isset($_POST['product_id'], $_POST['quantity']) && is_numeric($_POST['product_id']) && is_numeric($_POST['quantity'])) {
     // Set the post variables so we easily identify them, also make sure they are integer
     $product_id = (int)$_POST['product_id'];
     $quantity = (int)$_POST['quantity'];
     // Prepare the SQL statement, we basically are checking if the product exists in our database
-    $stmt = $pdo->prepare('SELECT * FROM hanghoa WHERE MSHH = ?');
-    $stmt->execute([$_POST['product_id']]);
+    $query = $pdo->prepare('SELECT * FROM hanghoa WHERE MSHH = ?');
+    $query->execute([$_POST['product_id']]);
     // Fetch the product from the database and return the result as an Array
-    $product = $stmt->fetch(PDO::FETCH_ASSOC);
+    $product = $query->fetch(PDO::FETCH_ASSOC);
     // Check if the product exists (array is not empty)
     if ($product && $quantity > 0) {
         // Product exists in database, now we can create/update the session variable for the cart
@@ -52,11 +53,6 @@ if (isset($_POST['update']) && isset($_SESSION['cart'])) {
     header('location: index.php?page=cart');
     exit;
 }
-// Send the user to the place order page if they click the Place Order button, also the cart should not be empty
-if (isset($_POST['placeorder']) && isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
-    header('Location: index.php?page=placeorder');
-    exit;
-}
 // Check the session variable for products in cart
 $products_in_cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
 $products = array();
@@ -66,22 +62,34 @@ if ($products_in_cart) {
     // There are products in the cart so we need to select those products from the database
     // Products in cart array to question mark string array, we need the SQL statement to include IN (?,?,?,...etc)
     $array_to_question_marks = implode(',', array_fill(0, count($products_in_cart), '?'));
-    $stmt = $pdo->prepare('SELECT * FROM hanghoa WHERE MSHH IN (' . $array_to_question_marks . ')');
+    $query = $pdo->prepare('SELECT * FROM hanghoa WHERE MSHH IN (' . $array_to_question_marks . ')');
     // We only need the array keys, not the values, the keys are the id's of the products
-    $stmt->execute(array_keys($products_in_cart));
+    $query->execute(array_keys($products_in_cart));
     // Fetch the products from the database and return the result as an Array
-    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $products = $query->fetchAll(PDO::FETCH_ASSOC);
     // Calculate the subtotal
     foreach ($products as $product) {
         $subtotal += (float)$product['Gia'] * (int)$products_in_cart[$product['MSHH']];
     }
 }
+
+// Send the user to the place order page if they click the Place Order button, also the cart should not be empty
+if (!isset($_SESSION['mskh'])) {
+    header('location: index.php?page=login');
+    exit;
+}
+if (isset($_POST['placeorder']) && isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
+    header('location: index.php?page=cart');
+    // insert into dathang
+    // insert int chitietdathang
+    exit;
+}
 ?>
 <?=template_header('Giỏ hàng')?>
 
 <div class="cart content-wrapper">
-    <h1>Giỏ hàng</h1>
-    <form action="index.php?page=cart" method="post">
+    <h1>Chi tiết đặt hàng</h1>
+    <form method="post">
         <table>
             <thead>
                 <tr>
@@ -120,12 +128,15 @@ if ($products_in_cart) {
             </tbody>
         </table>
         <div class="subtotal">
-            <span class="text">Tổng số tiền</span>
-            <span class="price">&dollar;<?=$subtotal?></span>
+            <div>
+                <span class="text">Tổng số tiền:</span>
+                <span class="price">&dollar;<?=$subtotal?></span>
+            </div>
         </div>
         <div class="buttons">
             <input type="submit" value="Cập Nhật" name="update">
             <input type="submit" value="Đặt hàng" name="placeorder">
+    
         </div>
     </form>
 </div>

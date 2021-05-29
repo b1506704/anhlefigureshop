@@ -1,8 +1,8 @@
 <?php
 // Get the 4 most recently added products
-$stmt = $pdo->prepare('SELECT * FROM hanghoa ORDER BY MSHH DESC LIMIT 4');
-$stmt->execute();
-$recently_added_products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$query = $pdo->prepare('SELECT * FROM hanghoa ORDER BY MSHH DESC LIMIT 4');
+$query->execute();
+$recently_added_products = $query->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <?=template_header('Trang chủ')?>
 

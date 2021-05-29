@@ -2,10 +2,10 @@
 // Check to make sure the id parameter is specified in the URL
 if (isset($_GET['MSHH'])) {
     // Prepare statement and execute, prevents SQL injection
-    $stmt = $pdo->prepare('SELECT * FROM hanghoa WHERE MSHH = ?');
-    $stmt->execute([$_GET['MSHH']]);
+    $query = $pdo->prepare('SELECT * FROM hanghoa WHERE MSHH = ?');
+    $query->execute([$_GET['MSHH']]);
     // Fetch the product from the database and return the result as an Array
-    $product = $stmt->fetch(PDO::FETCH_ASSOC);
+    $product = $query->fetch(PDO::FETCH_ASSOC);
     // Check if the product exists (array is not empty)
     if (!$product) {
         // Simple error to display if the id for the product doesn't exists (array is empty)
