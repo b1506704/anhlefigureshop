@@ -1,5 +1,4 @@
 <?php
-// Check to make sure the id parameter is specified in the URL
 if (isset($_POST['mskh']) && isset($_POST['login'])) {
     $_SESSION['mskh'] = $_POST['mskh'];
     header('location: index.php');

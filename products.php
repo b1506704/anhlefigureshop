@@ -14,7 +14,7 @@ $products = $query->fetchAll(PDO::FETCH_ASSOC);
 // Get the total number of products
 $total_products = $pdo->query('SELECT * FROM hanghoa')->rowCount();
 ?>
-<?=template_header('Figures')?>
+<?=template_header('Kho Hàng')?>
 
 <div class="products content-wrapper">
     <h1>Kho hàng</h1>
