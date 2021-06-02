@@ -1,68 +1,92 @@
+<!-- update bill status -->
+<!-- see product list with delete, add, and update function -->
 <?php
-session_start();
-$DATABASE_HOST = 'localhost';
-$DATABASE_USER = 'root';
-$DATABASE_PASS = '';
-$DATABASE_NAME = 'quanlydathang';
-try {
-    $pdo = new PDO('mysql:host=' . $DATABASE_HOST . ';dbname=' . $DATABASE_NAME . ';charset=utf8', $DATABASE_USER, $DATABASE_PASS);
-} catch (PDOException $exception) {
-    exit('Failed to connect to database!');
-}
-function template_header($title) {
-    if (isset($_POST['logout'])) {
-        unset($_SESSION['mskh']);
-        header("location: index.php"); 
-    }
-    $login_id = isset($_SESSION['mskh']) ? $_SESSION['mskh'] : '';
-    $mskh = isset($_SESSION['mskh']) ? "<a>$login_id</a>" : null;
-    $login_status = isset($_SESSION['mskh']) ? 
-    '<form method="post">
-        <input class="logout" type="submit" name="logout" value="LOGOUT">
-    </form>' : '<a href="index.php?page=login">LOGIN</a>';
+include "util.php";
+$num_products_on_each_page = 4;
+// The current page, in the URL this will appear as index.php?page=products&p=1, index.php?page=products&p=2, etc...
+$_SESSION['current_page'] = $current_page = isset($_GET['p']) && is_numeric($_GET['p']) ? (int)$_GET['p'] : 1;
+// Select products ordered by the date added
+$query = $pdo->prepare('SELECT * FROM hanghoa ORDER BY MSHH ASC LIMIT ?,?');
+// bindValue will allow us to use integer in the SQL statement, we need to use for LIMIT
+$query->bindValue(1, ($current_page - 1) * $num_products_on_each_page, PDO::PARAM_INT);
+$query->bindValue(2, $num_products_on_each_page, PDO::PARAM_INT);
+$query->execute();
+// Fetch the products from the database and return the result as an Array
+$products = $query->fetchAll(PDO::FETCH_ASSOC);
+// Get the total number of products
+$total_products = $pdo->query('SELECT * FROM hanghoa')->rowCount();
 
-    echo <<<EOT
-            <!DOCTYPE html>
-            <html>
-                <head>
-                    <meta charset="utf-8">
-                    <meta http-equiv="Cache-control" content="no-cache">
-                    <title>$title</title>
-                    <link href="style.css" rel="stylesheet" type="text/css">
-                    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
-                </head>
-                <body>
-                    <header>
-                        <div class="content-wrapper">
-                            <h1>Admin Panel</h1>
-                            <nav>
-                                <a href="index.php">Home</a>
-                                <a href="index.php?page=bill">Bills</a>
-                                $mskh
-                                $login_status
-                            </nav>
-                            
-                        </div>
-                    </header>
-                    <main>
-            EOT;
-}
-// Template footer
-function template_footer() {
-    $year = date('Y');
-    echo <<<EOT
-                    </main>
-                    <footer>
-                        <div class="content-wrapper">
-                            <p>&copy; $year, Anh Lê Figure Shop Admin Panel. Developed by Le Bao Anh - B1506704 from CTU</p>
-                        </div>
-                    </footer>
-                </body>
-            </html>
-            EOT;
-}
-// Page is set to home (home.php) by default, so when the visitor visits that will be the page they see.
-$page = isset($_GET['page']) && file_exists($_GET['page'] . '.php') ? $_GET['page'] : 'dashboard';
-// Include and show the requested page
-include $page . '.php';
+if (isset($_GET['d_mshh'])) {
+    $stmt = $pdo->prepare('DELETE FROM hanghoa WHERE mshh = ?');
+    $stmt->execute([$_GET['d_mshh']]);
+    $_SESSION['msg'] = "Đã xóa mã hàng " . $_GET['d_mshh'];
+    header('location: index.php?&p=' . $current_page+1);
+} 
 ?>
+<?=template_header('Quản Lý Hàng Hóa')?>
+
+<div class="cart content-wrapper">
+    <h1>Quản Lý Hàng Hóa</h1>
+    <form method="post">
+        <div class="buttons">
+            <p style="font-family: monospace;">Hoạt động gần nhất: <?=$_SESSION['msg']?></p>
+            <a href="cdu.php" class="add">Thêm</a>
+        </div>
+        <table>
+            <thead>
+                <tr class="table_header">
+                    <td>MSHH</td>
+                    <td>Tên HH</td>
+                    <td>Hình Ảnh</td>
+                    <td>Giá</td>
+                    <td>Số Lượng</td>
+                    <td>Mã Loại</td>
+                    <td>Mô Tả</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (empty($products)): ?>
+                <tr>
+                    <td style="text-align:center; font-family:monospace">Giỏ hàng trống</td>
+                </tr>
+                <?php else: ?>
+                <?php foreach ($products as $product): ?>
+                <tr>
+                    <td><?=$product['MSHH']?></td>
+                    <td><?=$product['TenHH']?></td>
+                    <td class="img">
+                        <img src="./assets/imgs/<?=$product['HinhAnh']?>" width="50" height="50" alt="<?=$product['TenHH']?>">
+                    </td>
+                    <td>&dollar;<?=$product['Gia']?></td>
+                    <td><?=$product['SoLuongHang'] ?></td>
+                    <td><?=$product['MaLoaiHang'] ?></td>
+                    <td ><?=$product['GhiChu'] ?></td>
+                    <td class="actions">
+                        <input type="hidden" name="u_mshh" value="<?=$product['MSHH']?>">
+                        <a href="cdu.php?u_mshh=<?=$product['MSHH']?>" class="edit">
+                            <i class="fas fa-pen fa-xs"></i>
+                        </a>
+                        <a href="index.php?d_mshh=<?=$product['MSHH']?>" class="trash"><i class="fas fa-trash fa-xs"></i></a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+        <div class="buttons">
+            <?php if ($current_page > 1): ?>
+            <a href="index.php?&p=<?=$current_page-1?>">
+            <i class="fas fa-angle-double-left fa-sm"></i>
+            </a>
+            <?php endif; ?>
+            <?php if ($total_products > ($current_page * $num_products_on_each_page) - $num_products_on_each_page + count($products)): ?>
+            <a href="index.php?&p=<?=$current_page+1?>">
+            <i class="fas fa-angle-double-right fa-sm"></i>
+            </a>
+        <?php endif; ?>
+        </div>
+    </form>
+</div>
+
+<?=template_footer()?>

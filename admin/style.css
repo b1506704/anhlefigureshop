@@ -247,6 +247,7 @@ main .update form {
 	font-family: monospace;
 	box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 }
+
 main .update form label {
 	display: inline-flex;
 	width: 400px;
@@ -274,7 +275,7 @@ main .update form input[type="submit"] {
 	font-weight: bold;
 	border-radius: 5px;
 	text-align: center;
-	width: 200px;
+	width: 350px;
 	box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 	transition: all 0.4s ease-in-out;
 }
@@ -283,25 +284,6 @@ main .update form input[type="submit"]:hover {
 	background: #434f61;
 	text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #9dd7e6;
 }
-.delete .yesno {
-	display: flex;
-}
-.delete .yesno a {
-	display: inline-block;
-	text-decoration: none;
-	background-color: #38b673;
-	font-weight: bold;
-	color: #FFFFFF;
-	padding: 10px 15px;
-	margin: 15px 10px 15px 0;
-}
-.delete .yesno a:hover {
-	background-color: #32a367;
-}
-
-
-
-
 
 footer {
 	position: absolute;
