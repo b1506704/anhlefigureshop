@@ -28,15 +28,14 @@ function template_header($title) {
                     <meta charset="utf-8">
                     <meta http-equiv="Cache-control" content="no-cache">
                     <title>$title</title>
-                    <link href="style.css" rel="stylesheet" type="text/css">
-                    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+                    <link href="admin_style.css" rel="stylesheet" type="text/css">
                 </head>
                 <body>
                     <header>
                         <div class="content-wrapper">
                             <h1>Admin Panel</h1>
                             <nav>
-                                <a href="index.php">Home</a>
+                                <a href="admin.php">Home</a>
                                 <a href="bill.php">Bills</a>
                                 $mskh
                                 $login_status

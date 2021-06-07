@@ -2,7 +2,7 @@
 	font-family: Title;
 	src: url('./assets/fonts/Andromeda-eR2n.ttf');
 }
-  
+
 @font-face {
 	font-family: Subtitle;
 	src: url('./assets/fonts/HP001_5_hang_bold.ttf');
@@ -189,18 +189,24 @@ main .cart table tbody tr td.actions {
 }
 main .cart table tbody tr td.actions .edit, main .cart table tbody tr td.actions .trash {
 	display: inline-flex;
-	text-align: right;
+	/* text-align: center; */
+	align-items: center;
+	justify-content: center;
 	text-decoration: none;
 	color: #FFFFFF;
 	padding: 10px 12px;
 }
 main .cart table tbody tr td.actions .trash {
+	/* text-align: center; */
+	width: 90px;	
 	background-color: #b73737;
 }
 main .cart table tbody tr td.actions .trash:hover {
 	background-color: #a33131;
 }
 main .cart table tbody tr td.actions .edit {
+	/* text-align: center; */
+	width: 90px;	
 	background-color: #37afb7;
 }
 main .cart table tbody tr td.actions .edit:hover {
@@ -261,6 +267,15 @@ main .update form input, main .update form select {
 	margin-bottom: 15px;
 	font-family: monospace;	
 	border: 1px solid #cccccc;
+}
+main .update form textarea  {
+	padding: 10px;
+	width: 400px;
+	margin-right: 25px;
+	margin-bottom: 15px;
+	font-family: monospace;	
+	border: 1px solid #cccccc;
+	resize: none;
 }
 main .update form input[type="submit"] {
 	display: block;

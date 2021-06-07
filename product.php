@@ -36,7 +36,20 @@ if (isset($_GET['MSHH'])) {
             <div>
                 Tỷ lệ: <?=$product['MaLoaiHang']?> 
             </div>
-            <?=$product['GhiChu']?>
+            <textarea
+                disabled
+                style="
+                border-style: none; 
+                background: transparent; 
+                resize: none;
+                font-size: 20px;
+                
+                
+                text-align: justify;
+                width: 400px; 
+                height: 200px; 
+                "
+            ><?=$product['GhiChu']?></textarea>
         </div>
     </div>
 </div>

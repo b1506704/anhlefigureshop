@@ -410,7 +410,7 @@ main .cart table thead td:last-child {
 }
 main .cart table tbody td {
 	padding: 20px 0;
-	font-family: Outerspace;
+	font-family: monospace;
 	border-bottom: 1px solid #EEEEEE;
 }
 main .cart table tbody td:last-child {

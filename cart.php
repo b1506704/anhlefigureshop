@@ -1,5 +1,4 @@
 <?php
-
 // If the user clicked the add to cart button on the product page we can check for the form data
 if (isset($_POST['product_id'], $_POST['quantity']) && is_numeric($_POST['product_id']) && is_numeric($_POST['quantity'])) {
     // Set the post variables so we easily identify them, also make sure they are integer
@@ -62,6 +61,7 @@ if ($products_in_cart) {
     // There are products in the cart so we need to select those products from the database
     // Products in cart array to question mark string array, we need the SQL statement to include IN (?,?,?,...etc)
     $array_to_question_marks = implode(',', array_fill(0, count($products_in_cart), '?'));
+    
     $query = $pdo->prepare('SELECT * FROM hanghoa WHERE MSHH IN (' . $array_to_question_marks . ')');
     // We only need the array keys, not the values, the keys are the id's of the products
     $query->execute(array_keys($products_in_cart));
@@ -73,22 +73,54 @@ if ($products_in_cart) {
     }
 }
 
-// Send the user to the place order page if they click the Place Order button, also the cart should not be empty
 if (!isset($_SESSION['mskh'])) {
     header('location: index.php?page=login');
     exit;
 }
+
+$bills = array();
+
+
 if (isset($_POST['placeorder']) && isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
+    $query_dat_hang = $pdo->prepare('INSERT INTO dathang VALUES (?, ?, ?, ?, ?, ?)');
+    $query_ct_dat_hang = $pdo->prepare('INSERT INTO chitietdathang VALUES (?, ?, ?, ?, ?)');
+
+    date_default_timezone_set('Asia/Ho_Chi_Minh');
+    $date = date("Y-m-d H:i:s");
+
+    foreach ($products as $to_insert_product) {
+        $so_don_dh = rand(1,10000);
+        $mshh = $to_insert_product['MSHH'];
+        $so_luong = $products_in_cart[$to_insert_product['MSHH']];
+        $gia = (float)$to_insert_product['Gia'] * (int)$products_in_cart[$to_insert_product['MSHH']];
+        $giam_gia = $gia * rand(5,100) / 100;
+        $query_dat_hang->execute([$so_don_dh, $_SESSION['mskh'], 1, $date, NULL, 0]);
+        $query_ct_dat_hang->execute([$so_don_dh, $mshh, $so_luong, $gia, $giam_gia]);
+        
+    }
+
+    $query_refresh = $pdo->prepare('SELECT * FROM dathang WHERE mskh = ? ORDER BY NgayDH ASC');
+    $query_refresh->execute([$_SESSION['mskh']]);
+
+    $bills = $query_refresh->fetchAll(PDO::FETCH_ASSOC);
+
+    unset($_SESSION['cart']);
+
     header('location: index.php?page=cart');
-    // insert into dathang
-    // insert int chitietdathang
-    exit;
 }
+
+if (isset($_SESSION['mskh'])) {
+    $stmt = $pdo->prepare('SELECT * FROM dathang WHERE mskh = ? ORDER BY NgayDH ASC');
+    $stmt->execute([$_SESSION['mskh']]);
+    $bills = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
 ?>
 <?=template_header('Giỏ hàng')?>
 
 <div class="cart content-wrapper">
-    <h1>Chi tiết đặt hàng</h1>
+    <h1 >Giỏ Hàng</h1>
     <form method="post">
         <table>
             <thead>
@@ -140,5 +172,46 @@ if (isset($_POST['placeorder']) && isset($_SESSION['cart']) && !empty($_SESSION[
         </div>
     </form>
 </div>
-
+<div class='cart content-wrapper'>
+    <h1 style="position: sticky; top: 50px; width: 100%; background-color: white;">Đơn Đặt Hàng</h1>
+    <table>
+        <thead>
+            <tr>
+                <td>Số Đơn Đặt Hàng</td>
+                <td>Mã Số Khách Hàng</td>
+                <td>Ngày Đặt Hàng</td>
+                <td>Ngày Giao Hàng</td>
+                <td>Tình Trạng</td>
+            </tr>
+        </thead>
+        <tbody >
+            <?php if ($bills === null) : ?>
+            <tr>
+                <td colspan='5' style='text-align:center; font-family:monospace'>Đơn Đặt Hàng Trống</td>
+            </tr>
+            <?php else: ?>
+            <?php foreach ($bills as $bill): ?>
+            <tr>
+                <td>
+                    <a><?=$bill['SoDonDH']?></a>
+                </td>
+                <td>
+                    <a><?=$bill['MSKH']?></a>
+                </td>
+                <td>
+                    <a><?=$bill['NgayDH']?></a>
+                </td>
+                <td>
+                    <a><?=$bill['NgayGH']?></a>
+                </td>
+                <td>
+                <a><?=$bill['Duyet'] == 0 ? 'Chưa Duyệt' : 'Đã Duyệt' ?></a>
+                </td>
+                
+            </tr>
+            <?php endforeach; ?>
+            <?php endif; ?>
+        </tbody>
+    </table>
+</div>
 <?=template_footer()?>
