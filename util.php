@@ -7,16 +7,19 @@ $DATABASE_NAME = 'quanlydathang';
 try {
     $pdo = new PDO('mysql:host=' . $DATABASE_HOST . ';dbname=' . $DATABASE_NAME . ';charset=utf8', $DATABASE_USER, $DATABASE_PASS);
 } catch (PDOException $exception) {
-    exit('Failed to connect to database!');
+    exit('Lỗi kết nối CSDL!');
 }
 function template_header($title) {
+    // sự kiện đăng xuất
     if (isset($_POST['logout'])) {
         unset($_SESSION['mskh']);
-        header("location: index.php"); 
+        header("location: admin.php"); 
     }
-    $login_id = isset($_SESSION['mskh']) ? $_SESSION['mskh'] : '';
-    $mskh = isset($_SESSION['mskh']) ? "<a>$login_id</a>" : null;
-    $login_status = isset($_SESSION['mskh']) ? 
+    
+    // hiển thị nút thông tin đăng nhập
+    $login_id = isset($_SESSION['mskh_admin']) ? $_SESSION['mskh_admin'] : '';
+    $mskh = isset($_SESSION['mskh_admin']) ? "<a>$login_id</a>" : null;
+    $login_status = isset($_SESSION['mskh_admin']) ? 
     '<form method="post">
         <input class="logout" type="submit" name="logout" value="LOGOUT">
     </form>' : '<a href="index.php?page=login">LOGIN</a>';
@@ -28,7 +31,7 @@ function template_header($title) {
                     <meta charset="utf-8">
                     <meta http-equiv="Cache-control" content="no-cache">
                     <title>$title</title>
-                    <link href="admin_style.css" rel="stylesheet" type="text/css">
+                    <link href="./assets/css/admin_style.css" rel="stylesheet" type="text/css">
                 </head>
                 <body>
                     <header>

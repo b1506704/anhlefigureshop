@@ -1,17 +1,17 @@
 @font-face {
 	font-family: Title;
-	src: url('./assets/fonts/Andromeda-eR2n.ttf');
+	src: url('../fonts/Andromeda-eR2n.ttf');
 }
 
 @font-face {
 	font-family: Subtitle;
-	src: url('./assets/fonts/HP001_5_hang_bold.ttf');
+	src: url('../fonts/HP001_5_hang_bold.ttf');
   
 }
   
 @font-face {
 	font-family: Outerspace;
-	src: url('./assets/fonts/SoundWave-GOK7a.ttf');
+	src: url('../fonts/SoundWave-GOK7a.ttf');
 }
 @keyframes glow {
 	from {

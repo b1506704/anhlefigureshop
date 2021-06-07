@@ -1,19 +1,15 @@
 <?php
 include "util.php";
+// phân trang
 $num_bills_on_each_page = 4;
-// The current page, in the URL this will appear as index.php?page=bills&p=1, index.php?page=bills&p=2, etc...
 $current_page = isset($_GET['bill_p']) && is_numeric($_GET['bill_p']) ? (int)$_GET['bill_p'] : 1;
-// Select bills ordered by the date added
 $query = $pdo->prepare('SELECT * FROM dathang ORDER BY NgayDH ASC LIMIT ?,?');
-// bindValue will allow us to use integer in the SQL statement, we need to use for LIMIT
 $query->bindValue(1, ($current_page - 1) * $num_bills_on_each_page, PDO::PARAM_INT);
 $query->bindValue(2, $num_bills_on_each_page, PDO::PARAM_INT);
 $query->execute();
-// Fetch the bills from the database and return the result as an Array
 $bills = $query->fetchAll(PDO::FETCH_ASSOC);
-// Get the total number of bills
 $total_bills = $pdo->query('SELECT * FROM dathang')->rowCount();
-
+// sự kiện xóa đơn đặt hàng
 if (isset($_GET['d_bill'])) {
     $chi_tiet_dh_query = $pdo->prepare('DELETE FROM chitietdathang WHERE SoDonDH = ?');
     $chi_tiet_dh_query->execute([$_GET['d_bill']]);
@@ -25,7 +21,7 @@ if (isset($_GET['d_bill'])) {
 
     header('location: bill.php?&bill_p=' . $_SESSION['current_bill_page']);
 }
-
+// sự kiện duyệt/ bỏ duyệt đơn đặt hàng
 if (isset($_GET['c_bill'])) {
     $duyet_query = $pdo->prepare('SELECT * FROM dathang WHERE SoDonDH = ?');
     $duyet_query->execute([$_GET['c_bill']]);

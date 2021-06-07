@@ -1,19 +1,14 @@
 <?php
-// Check to make sure the id parameter is specified in the URL
+// hiển thị thông tin chi tiết hàng hóa
 if (isset($_GET['MSHH'])) {
-    // Prepare statement and execute, prevents SQL injection
     $query = $pdo->prepare('SELECT * FROM hanghoa WHERE MSHH = ?');
     $query->execute([$_GET['MSHH']]);
-    // Fetch the product from the database and return the result as an Array
     $product = $query->fetch(PDO::FETCH_ASSOC);
-    // Check if the product exists (array is not empty)
     if (!$product) {
-        // Simple error to display if the id for the product doesn't exists (array is empty)
-        exit('Product does not exist!');
+        exit('Không tồn tại hàng hóa này!');
     }
 } else {
-    // Simple error to display if the id wasn't specified
-    exit('Product does not exist!');
+    exit('Không tồn tại hàng hóa này!');
 }
 ?>
 <?=template_header('Chi tiết sản phẩm')?>
@@ -26,7 +21,7 @@ if (isset($_GET['MSHH'])) {
             &dollar;<?=$product['Gia']?>
         </span>
         <form action="index.php?page=cart" method="post">
-            <input type="number" name="quantity" value="1" min="1" max="<?=$product['SoLuongHang']?>" placeholder="0" required>
+            <input type="number" name="quantity" value="0" min="0" max="<?=$product['SoLuongHang']?>" placeholder="0" required>
             <input type="hidden" name="product_id" value="<?=$product['MSHH']?>">
             <input type="submit" value="Thêm vào giỏ">
         </form>
@@ -43,8 +38,6 @@ if (isset($_GET['MSHH'])) {
                 background: transparent; 
                 resize: none;
                 font-size: 20px;
-                
-                
                 text-align: justify;
                 width: 400px; 
                 height: 200px; 

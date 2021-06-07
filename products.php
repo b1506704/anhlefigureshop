@@ -1,17 +1,12 @@
 <?php
-// The amounts of products to show on each page
+// phân trang
 $num_products_on_each_page = 5;
-// The current page, in the URL this will appear as index.php?page=products&p=1, index.php?page=products&p=2, etc...
 $current_page = isset($_GET['p']) && is_numeric($_GET['p']) ? (int)$_GET['p'] : 1;
-// Select products ordered by the date added
 $query = $pdo->prepare('SELECT * FROM hanghoa ORDER BY MSHH DESC LIMIT ?,?');
-// bindValue will allow us to use integer in the SQL statement, we need to use for LIMIT
 $query->bindValue(1, ($current_page - 1) * $num_products_on_each_page, PDO::PARAM_INT);
 $query->bindValue(2, $num_products_on_each_page, PDO::PARAM_INT);
 $query->execute();
-// Fetch the products from the database and return the result as an Array
 $products = $query->fetchAll(PDO::FETCH_ASSOC);
-// Get the total number of products
 $total_products = $pdo->query('SELECT * FROM hanghoa')->rowCount();
 ?>
 <?=template_header('Kho Hàng')?>
