@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 07, 2021 at 06:50 PM
+-- Generation Time: Jun 07, 2021 at 07:07 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `quanlydathang`
 --
+CREATE DATABASE IF NOT EXISTS `quanlydathang` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `quanlydathang`;
 
 -- --------------------------------------------------------
 
